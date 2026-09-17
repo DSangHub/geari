@@ -4,76 +4,264 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GEARI — Every shift. Scored.</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23090a0c' stroke='%23e8a317'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='16' fill='%23e8a317'%3EG%3C/text%3E%3C/svg%3E" />
+  <meta name="description" content="GEARI connects to your vehicle computer and scores every gear change, lane change, and brake. Independent safe-driving ratings for stick-shift and rideshare drivers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <nav>
     <div class="wrap nav-in">
       <a class="logo" href="#top"><span class="mark">G</span> GEARI</a>
       <div class="nav-links">
-        <a href="PRODUCT.md">Product</a>
-        <a href="#connect">Connect</a>
+        <a href="#how" data-i="navHow">How it works</a>
+        <a href="#connect" data-i="navConnect">Connect</a>
+        <a href="#score" data-i="navScore">Score</a>
+        <a href="#commute" data-i="navCommute">Commute</a>
+        <a href="#rideshare" data-i="navRide">Rideshare</a>
+        <a href="#lang" data-i="navLang">Languages</a>
         <select class="lang" id="lang" aria-label="Language"></select>
+        <button class="cta" id="waitlistBtn" data-i="cta">Join waitlist</button>
       </div>
     </div>
   </nav>
   <main class="wrap" id="top">
     <div class="hero">
       <div>
-        <div class="eyebrow">Manual transmission · Vehicle computer</div>
-        <h1>Every shift.<br><span>Scored.</span></h1>
-        <p class="lead">GEARI pairs with the vehicle computer and records every gear change. Smooth shifts, lane changes, and braking earn points. Independent ratings for stick-shift and rideshare drivers — South America and the Far East first.</p>
+        <div class="eyebrow" data-i="eyebrow">Manual transmission · Vehicle computer</div>
+        <h1 data-i="h1">Every shift.<br><span>Scored.</span></h1>
+        <p class="lead" data-i="lead">GEARI plugs into the vehicle computer and records every gear change. Smooth shifts, clean lane changes, and measured braking earn points. Build an independent safe-driving rating that rideshare platforms do not own.</p>
         <div class="hero-actions">
-          <a class="cta" href="PRODUCT.md">Read the spec</a>
-          <a class="cta ghost" href="#connect">Connect your car</a>
+          <button class="cta" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})" data-i="seeDemo">See live trip</button>
+          <button class="cta ghost" onclick="document.getElementById('commute').scrollIntoView({behavior:'smooth'})" data-i="planTrip">Plan a safe arrival</button>
         </div>
         <div class="stats">
-          <div class="stat"><b>H-pattern</b><span>1–6 + R logged</span></div>
-          <div class="stat"><b>OBD / CAN</b><span>OBDBr · EOBD · JOBD · BS-VI</span></div>
-          <div class="stat"><b>0–1000</b><span>Geari Score</span></div>
+          <div class="stat"><b>H-pattern</b><span data-i="s1">1–6 + R logged</span></div>
+          <div class="stat"><b>OBD / CAN</b><span data-i="s2">RPM, speed, load</span></div>
+          <div class="stat"><b>0–1000</b><span data-i="s3">Geari Score</span></div>
         </div>
       </div>
-      <div class="phone">
+      <div class="phone" id="demo">
         <div class="notch"></div>
-        <div class="hud-top"><span class="live">TRIP LIVE</span><span class="mono">geari.app</span></div>
+        <div class="hud-top">
+          <span class="live" data-i="live">TRIP LIVE</span>
+          <span class="mono" id="clock">07:42</span>
+        </div>
         <div class="cluster">
-          <div class="gauge"><div class="rpm mono">2,140</div><div class="label">RPM</div></div>
-          <div class="gear-big">3</div>
-          <div class="gauge"><div class="rpm mono">38</div><div class="label">MPH</div></div>
+          <div class="gauge"><div class="rpm mono" id="rpm">2,140</div><div class="label">RPM</div></div>
+          <div class="gear-big" id="gear">3</div>
+          <div class="gauge"><div class="rpm mono" id="spd">38</div><div class="label" data-i="mph">MPH</div></div>
         </div>
         <div class="bars">
-          <div class="bar"><span class="label">Shift</span><strong>94</strong></div>
-          <div class="bar"><span class="label">Lane</span><strong>88</strong></div>
-          <div class="bar"><span class="label">Brake</span><strong>91</strong></div>
+          <div class="bar"><span class="label" data-i="shiftQ">Shift</span><strong id="qShift">94</strong></div>
+          <div class="bar"><span class="label" data-i="laneQ">Lane</span><strong id="qLane">88</strong></div>
+          <div class="bar"><span class="label" data-i="brakeQ">Brake</span><strong id="qBrake">91</strong></div>
         </div>
+        <div class="score-row">
+          <span class="label" data-i="tripScore">Trip score</span>
+          <span class="score-num" id="tripScore">+42</span>
+        </div>
+        <div class="shifts" id="shiftLog"></div>
       </div>
     </div>
+    <section id="how">
+      <div class="sec-h">
+        <div class="eyebrow" data-i="howEyebrow">Connected to the car</div>
+        <h2 data-i="howH">The stick-shift computer<br>your phone never had.</h2>
+        <p class="sub" data-i="howP">Most telematics apps treat a clutch like an automatic. GEARI infers gear from the speed–RPM ratio, times the shift window, and scores how cleanly you complete it.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card"><div class="ico">01</div><h3 data-i="f1t">Plug in. Pair. Drive.</h3><p data-i="f1p">Bluetooth OBD-II or native CAN where supported. GEARI reads RPM, vehicle speed, throttle, and engine load. No dealer tool.</p></article>
+        <article class="card"><div class="ico">02</div><h3 data-i="f2t">Every shift is a record</h3><p data-i="f2p">Up, down, skip-shift, or into reverse. Each event stores gear in, gear out, RPM band, jerk, and a smoothness grade.</p></article>
+        <article class="card"><div class="ico">03</div><h3 data-i="f3t">Points for control</h3><p data-i="f3p">Smooth clutch work, signaled lane changes, and progressive braking add points. Dumping the clutch or stabbing the pedal costs them.</p></article>
+      </div>
+    </section>
     <section id="connect">
       <div class="sec-h">
-        <div class="eyebrow">South America · Far East · same plug</div>
-        <h2>Connect your car.</h2>
-        <p class="sub">The 16-pin port is SAE J1962 / ISO 15031-3. The law’s name changes: OBDBr-2 in Brazil, EOBD in Chile and ASEAN, JOBD in Japan, KOBD in Korea, China 6, India BS-VI. GEARI reads RPM and speed, then infers gear.</p>
+        <div class="eyebrow" data-i="cxEyebrow">South America · Far East · same plug</div>
+        <h2 data-i="cxH">Connect your car.</h2>
+        <p class="sub" data-i="cxP">GEARI does not need a US-only OBD-II stack. The 16-pin port under the dash is the same in Brazil, Japan, India, and Thailand. The law has another name — OBDBr, EOBD, JOBD, KOBD, China 6, BS-VI. The app reads RPM, speed, and load from that port, then infers every gear.</p>
       </div>
       <div class="steps">
-        <article class="card"><div class="step-n">01</div><h3>Find the port</h3><p>Under the dash, driver side.</p></article>
-        <article class="card"><div class="step-n">02</div><h3>BLE adapter</h3><p>Vgate iCar Pro BLE, Veepeak BLE+, or OBDLink MX+.</p></article>
-        <article class="card"><div class="step-n">03</div><h3>Handshake</h3><p>CAN, KWP2000, or K-line. Smoke-test RPM + speed.</p></article>
-        <article class="card"><div class="step-n">04</div><h3>Fallback</h3><p>No PIDs? Phone GPS + IMU. Sensor badge, not a fake ECU score.</p></article>
+        <article class="card"><div class="step-n">01</div><h3 data-i="cx1t">Find the port</h3><p data-i="cx1p">16-pin socket within reach of the driver — usually under the dash, driver side. Same SAE J1962 / ISO 15031-3 shape in every first-wave market.</p></article>
+        <article class="card"><div class="step-n">02</div><h3 data-i="cx2t">Plug a BLE adapter</h3><p data-i="cx2p">Bluetooth Low Energy dongle. iPhone needs BLE or MFi. Android accepts BLE or Classic. Cheap Classic clones will not pair on iOS.</p></article>
+        <article class="card"><div class="step-n">03</div><h3 data-i="cx3t">Handshake</h3><p data-i="cx3p">GEARI auto-detects CAN, KWP2000, or K-line. A ten-second smoke test asks for RPM and speed. Both streaming means ECU mode is on.</p></article>
+        <article class="card"><div class="step-n">04</div><h3 data-i="cx4t">Fallback</h3><p data-i="cx4p">No live PIDs? Phone GPS + IMU still scores lane and brake. The public rating shows a sensor badge, not a fake ECU score.</p></article>
+      </div>
+      <div class="split" style="margin-bottom:28px">
+        <div class="card">
+          <div class="label" data-i="cxPlugL">What the adapter talks to</div>
+          <h3 style="margin:8px 0 10px" data-i="cxPlugH">One connector. Regional names.</h3>
+          <p data-i="cxPlugP">Pins 6 and 14 carry CAN on most 2008+ / OBDBr-2 / China 6 / BS-VI cars. Older Asia and Europe use the K-line on pin 7. GEARI only needs legislated Mode 01 PIDs — not dealer coding.</p>
+          <div class="plug" aria-hidden="true">
+            <div class="pin">1</div><div class="pin">2</div><div class="pin">3</div><div class="pin">4</div>
+            <div class="pin">5</div><div class="pin live">6</div><div class="pin live">7</div><div class="pin">8</div>
+            <div class="pin">9</div><div class="pin">10</div><div class="pin">11</div><div class="pin">12</div>
+            <div class="pin">13</div><div class="pin live">14</div><div class="pin">15</div><div class="pin">16</div>
+          </div>
+          <p class="note" data-i="cxPins">Highlighted: 6 CAN-H · 7 K-line · 14 CAN-L. Pin 16 is battery. Gear is inferred from speed ÷ RPM. Clutch position is almost never on this port.</p>
+        </div>
+        <div>
+          <div class="grid-3" style="grid-template-columns:1fr 1fr">
+            <article class="card"><div class="ico">SA</div><h3 data-i="cxSaT">South America</h3><p data-i="cxSaP">Brazil OBDBr-2 / 2+ (ISO 15031, flex-fuel). Argentina and Chile follow EOBD-style ports on later cars. Mexico ~2007. Probe older Andean fleets — the hole can exist without live data.</p></article>
+            <article class="card"><div class="ico">FE</div><h3 data-i="cxFeT">Far East</h3><p data-i="cxFeP">JOBD (Japan), KOBD (Korea), GB 18352 China 6, India BS-VI, Thailand and Philippines Euro 4 EOBD. JDM cars can be picky with clone dongles. Export models are usually easier.</p></article>
+            <article class="card"><div class="ico">PID</div><h3 data-i="cxPidT">What we read</h3><p data-i="cxPidP">RPM, vehicle speed, throttle, calculated load, MAP or MAF. Enough to time a shift and grade jerk. Not fuel trim — ethanol flex cars swing those numbers.</p></article>
+            <article class="card"><div class="ico">HW</div><h3 data-i="cxHwT">Adapter allow-list</h3><p data-i="cxHwP">Vgate iCar Pro BLE, Veepeak BLE+, OBDLink MX+ / CX. Avoid unlabeled ELM “v2.1” clones on Mercado Libre, Shopee, and Lazada for daily scoring.</p></article>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="label" data-i="cxMatL">When ECU mode usually works</div>
+        <h3 style="margin:8px 0 14px" data-i="cxMatH">Market matrix</h3>
+        <div class="filters" id="regionFilters">
+          <button type="button" class="chip on" data-region="all" data-i="cxAll">All</button>
+          <button type="button" class="chip" data-region="sa" data-i="cxChipSa">South America</button>
+          <button type="button" class="chip" data-region="fe" data-i="cxChipFe">Far East</button>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th data-i="cxThM">Market</th><th data-i="cxThS">Local system</th><th data-i="cxThY">Typical ECU year</th><th data-i="cxThN">Notes for GEARI</th></tr></thead>
+            <tbody id="obdBody">
+              <tr data-region="sa"><td>Brazil</td><td>OBDBr-1 / 2 / 2+</td><td>2007 petrol · 2010 solid · diesel ~2015</td><td data-i="nBr">Flex-fuel. Use RPM and speed, not fuel trim.</td></tr>
+              <tr data-region="sa"><td>Argentina</td><td>EOBD-style</td><td>2008 domestic · 2009 imports</td><td data-i="nAr">Same 16-pin. Safety homologation ≠ OBD profile.</td></tr>
+              <tr data-region="sa"><td>Chile</td><td>EOBD / Euro 6c path</td><td>2013 diesel · 2014 petrol</td><td data-i="nCl">Later cars are the reliable ECU set.</td></tr>
+              <tr data-region="sa"><td>Mexico</td><td>OBD-II / EOBD mix</td><td>~2007</td><td data-i="nMx">US and EU platforms both common.</td></tr>
+              <tr data-region="sa"><td>Peru / Colombia</td><td>Import-led</td><td>Varies</td><td data-i="nPe">Port present on many imports. Smoke-test before scoring.</td></tr>
+              <tr data-region="fe"><td>Japan</td><td>JOBD</td><td>2003 basic · 2008 domestic</td><td data-i="nJp">JDM may need a better adapter than export twins.</td></tr>
+              <tr data-region="fe"><td>South Korea</td><td>KOBD</td><td>2005–06 · full ~2010</td><td data-i="nKr">Gasoline coverage is strong.</td></tr>
+              <tr data-region="fe"><td>China</td><td>GB 18352 China 5 / 6</td><td>2010 petrol · 2020 China 6</td><td data-i="nCn">Standard scan-tool PIDs on China 6.</td></tr>
+              <tr data-region="fe"><td>India</td><td>BS-VI OBD I / II</td><td>2017 tools · 2020 / 2023 / 2025 stages</td><td data-i="nIn">Hindi / Urdu / Punjabi markets. CAN on new cars.</td></tr>
+              <tr data-region="fe"><td>Thailand</td><td>TIS + EOBD</td><td>Euro 4 with EOBD from 2012</td><td data-i="nTh">Euro 3 wave can have a plug and no live PIDs.</td></tr>
+              <tr data-region="fe"><td>Philippines</td><td>Euro 4 EOBD</td><td>~2016–18</td><td data-i="nPh">Consumer BLE dongles widely sold.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note" data-i="cxDisc">A 16-pin hole is not a promise. Newest 2020s platforms may use CAN-FD or DoIP — v1 stays on classic CAN / K-line and phone fallback. EVs are out of scope.</p>
+      </div>
+    </section>
+    <section id="score">
+      <div class="sec-h">
+        <div class="eyebrow" data-i="scoreEyebrow">Points system</div>
+        <h2 data-i="scoreH">A score you can explain.</h2>
+        <p class="sub" data-i="scoreP">Not a black-box insurance grade. Drivers see why a trip paid or lost points — useful for self-coaching and for rideshare profiles.</p>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th data-i="thEvent">Event</th><th data-i="thSignal">Signals</th><th data-i="thPts">Points</th></tr></thead>
+          <tbody>
+            <tr><td data-i="r1a">Smooth upshift</td><td data-i="r1b">RPM in band, low jerk, no lurch</td><td>+8 to +15</td></tr>
+            <tr><td data-i="r2a">Rev-matched downshift</td><td data-i="r2b">Blip detected, RPM lands on ratio</td><td>+12 to +20</td></tr>
+            <tr><td data-i="r3a">Signaled lane change</td><td data-i="r3b">Heading + IMU, no abrupt yaw</td><td>+4 to +8</td></tr>
+            <tr><td data-i="r4a">Progressive braking</td><td data-i="r4b">Decel curve, no panic spike</td><td>+5 to +12</td></tr>
+            <tr><td data-i="r5a">Hard brake / clutch dump</td><td data-i="r5b">Jerk above threshold</td><td>−10 to −25</td></tr>
+            <tr><td data-i="r6a">Arrive inside safe window</td><td data-i="r6b">ETA vs. destination time you set</td><td>+10 bonus</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="commute">
+      <div class="split">
+        <div>
+          <div class="eyebrow" data-i="comEyebrow">Before you start</div>
+          <h2 data-i="comH">Add where you are going.<br>Add when you must arrive — safely.</h2>
+          <p class="sub" data-i="comP">Set work or any destination and a desired arrival. GEARI builds a time-to-reach that assumes legal speeds and calm inputs — not the fastest possible route. The trip score includes whether you kept that promise.</p>
+          <div class="form" style="margin-top:22px">
+            <div><label for="dest" data-i="lblDest">Destination</label><input id="dest" value="1201 K Street, Sacramento, CA" /></div>
+            <div><label for="arrive" data-i="lblArrive">Desired safe arrival</label><input id="arrive" type="time" value="08:30" /></div>
+            <div><label for="mode" data-i="lblMode">Trip type</label><select id="mode"><option data-i="optWork" value="work">Going to work</option><option data-i="optRide" value="ride">Rideshare block</option><option data-i="optOther" value="other">Other</option></select></div>
+            <button class="cta" id="planBtn" data-i="planCta">Compute safe window</button>
+            <div class="eta-box" id="etaBox">
+              <div class="label" data-i="safeWin">Safe arrival window</div>
+              <b id="etaText">Leave by 07:58 · arrive 08:24–08:30</b>
+              <p class="sub" style="margin-top:8px;font-size:14px" data-i="etaNote">Buffer built in for lights, grade, and measured shifting. Aggressive routing is off by default.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label" data-i="saved">Saved places</div>
+          <h3 style="margin:8px 0 16px" data-i="workTitle">Work commute profile</h3>
+          <p style="color:var(--mute);margin-bottom:16px" data-i="workP">Save one work address and a standing arrival time. Morning trips auto-load the plan. Evening trips can reverse the route.</p>
+          <div class="bars">
+            <div class="bar"><span class="label" data-i="avgScore">Avg score</span><strong>872</strong></div>
+            <div class="bar"><span class="label" data-i="onTime">On-time safe</span><strong>94%</strong></div>
+            <div class="bar"><span class="label" data-i="shiftsWk">Shifts / wk</span><strong>418</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="rideshare">
+      <div class="split">
+        <div class="profile">
+          <div style="display:flex;gap:14px;align-items:center">
+            <div class="avatar">DS</div>
+            <div>
+              <div class="eyebrow">GEARI ID · GR-18420</div>
+              <h3>D. Sang · Sacramento</h3>
+              <div class="mono" style="color:var(--green);margin-top:4px">Geari Score 872</div>
+            </div>
+          </div>
+          <div class="meter"><i></i></div>
+          <div class="badges">
+            <span class="badge" data-i="b1">Smooth Shift · Gold</span>
+            <span class="badge" data-i="b2">Rev-match 80%+</span>
+            <span class="badge" data-i="b3">Independent rating</span>
+            <span class="badge" data-i="b4">Rideshare verified</span>
+          </div>
+          <p style="color:var(--mute);margin-top:16px;font-size:14px" data-i="profP">Public profile riders and fleets can open before the trip. Platforms do not write this score. You do — by how you drive.</p>
+        </div>
+        <div>
+          <div class="eyebrow" data-i="rsEyebrow">Rideshare drivers</div>
+          <h2 data-i="rsH">An independent safe-driving rating.</h2>
+          <p class="sub" data-i="rsP">Create a driver profile. GEARI publishes a score built from vehicle data, not star ratings after a conversation. Share a link or QR. Passengers and dispatchers see smoothness, braking, and on-time safe arrivals — not a platform-controlled number.</p>
+          <div class="grid-3" style="margin-top:20px;grid-template-columns:1fr 1fr">
+            <div class="card"><h3 data-i="rs1t">Your data</h3><p data-i="rs1p">Trips, shifts, and scores live on your profile. Export anytime.</p></div>
+            <div class="card"><h3 data-i="rs2t">Not their score</h3><p data-i="rs2p">Uber and Lyft ratings stay on Uber and Lyft. GEARI is a second, vehicle-based ledger.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="backend">
+      <div class="sec-h">
+        <div class="eyebrow" data-i="beEyebrow">Backend</div>
+        <h2 data-i="beH">Profiles, trips, points.</h2>
+      </div>
+      <div class="arch">
+        <div class="card"><div class="ico">API</div><h3 data-i="be1t">Accounts</h3><p data-i="be1p">Driver profiles, language, saved work address, public vs private score.</p></div>
+        <div class="card"><div class="ico">CAN</div><h3 data-i="be2t">Trip ingest</h3><p data-i="be2p">Shift events, IMU samples, route vs safe window, device id.</p></div>
+        <div class="card"><div class="ico">PTS</div><h3 data-i="be3t">Scoring engine</h3><p data-i="be3p">Rules + rolling 0–1000 Geari Score. Auditable point ledger.</p></div>
+        <div class="card"><div class="ico">QR</div><h3 data-i="be4t">Public rating</h3><p data-i="be4p">Shareable rideshare card. No passenger PII stored to view a score.</p></div>
+      </div>
+    </section>
+    <section id="lang">
+      <div class="sec-h">
+        <div class="eyebrow" data-i="lgEyebrow">South America · Far East</div>
+        <h2 data-i="lgH">Language toggle from day one.</h2>
+        <p class="sub" data-i="lgP">First wave: Spanish, Hindi, Urdu, Punjabi, Tagalog, Thai — plus English. Use the control in the header. Urdu renders right-to-left.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card"><h3>Español</h3><p>América del Sur y conductores de transmisión manual en todo el continente.</p></div>
+        <div class="card"><h3>हिन्दी · اردو · ਪੰਜਾਬੀ</h3><p>Hindi, Urdu, Punjabi for dense stick-shift and rideshare markets.</p></div>
+        <div class="card"><h3>Tagalog · ไทย</h3><p>Tagalog and Thai for Southeast Asian commuter and gig drivers.</p></div>
       </div>
     </section>
   </main>
   <footer>
     <div class="wrap foot">
-      <div>GEARI · DSangHub/geari</div>
-      <div>Product concept · OBD-II / CAN</div>
+      <div>GEARI · geari.app · Manual driving, measured.</div>
+      <div data-i="foot">Product concept · Vehicle connection via OBD-II / CAN · Not a substitute for local traffic law</div>
     </div>
   </footer>
+  <div class="toast" id="toast"></div>
   <script src="i18n.js"></script>
-  <script>
-    const LANGS = [["en","English"],["es","Español"],["hi","हिन्दी"],["ur","اردو"],["pa","ਪੰਜਾਬੀ"],["tl","Tagalog"],["th","ไทย"]];
-    const sel = document.getElementById("lang");
-    LANGS.forEach(([c,n]) => { const o = document.createElement("option"); o.value = c; o.textContent = n; sel.appendChild(o); });
-  </script>
+  <script src="i18n-en.js"></script>
+  <script src="i18n-es.js"></script>
+  <script src="i18n-hi.js"></script>
+  <script src="i18n-ur.js"></script>
+  <script src="i18n-pa.js"></script>
+  <script src="i18n-tl.js"></script>
+  <script src="i18n-th.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
