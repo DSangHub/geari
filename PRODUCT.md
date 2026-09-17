@@ -2,7 +2,7 @@
 
 **Every shift. Scored.**
 
-An app for manual-transmission drivers. The phone pairs with the vehicle computer (OBD-II / CAN). When the car is put in gear, GEARI records the shift, scores how it was done, and rolls that into an independent safe-driving rating.
+An app for manual-transmission drivers. The phone pairs with the vehicle computer (OBD-II / CAN and regional equivalents). When the car is put in gear, GEARI records the shift, scores how it was done, and rolls that into an independent safe-driving rating.
 
 ## Who it is for
 
@@ -57,7 +57,44 @@ Toggle lives in the header of the product site.
 
 ## Hardware assumption
 
-Consumer Bluetooth OBD-II on ISO 15765-4 / J1979. Gear is inferred; clutch pedal position is usually *not* on passenger OBD. Phone IMU covers lane-change and brake jerk when the vehicle bus does not.
+Consumer Bluetooth OBD-II on ISO 15765-4 / J1979 (or KWP2000 / K-line where that is what the car speaks). Gear is inferred from vehicle speed ÷ engine RPM; clutch pedal position is usually *not* on passenger OBD. Phone IMU covers lane-change and brake jerk when the vehicle bus does not.
+
+Allow-list for v1: Vgate iCar Pro BLE, Veepeak BLE+, OBDLink MX+ / CX. Avoid unlabeled ELM “v2.1” clones for daily scoring.
+
+### Port and pins
+
+Same 16-pin SAE J1962 / ISO 15031-3 socket in first-wave markets.
+
+- Pin 6 CAN-H, pin 14 CAN-L (ISO 15765-4) on most 2008+ / OBDBr-2 / China 6 / BS-VI cars
+- Pin 7 K-line on older Asia / Europe
+- Pin 16 battery
+
+Legislated Mode 01 PIDs only: RPM, vehicle speed, throttle, calculated load, MAP or MAF. Do not use fuel trim on flex-fuel cars.
+
+### Regional names for the same idea
+
+| Market | Local system | Typical ECU year | Notes for GEARI |
+|---|---|---|---|
+| Brazil | OBDBr-1 / 2 / 2+ | 2007 petrol · 2010 solid · diesel ~2015 | Flex-fuel. Use RPM and speed, not fuel trim. |
+| Argentina | EOBD-style | 2008 domestic · 2009 imports | Same 16-pin. Safety homologation ≠ OBD profile. |
+| Chile | EOBD / Euro 6c path | 2013 diesel · 2014 petrol | Later cars are the reliable ECU set. |
+| Mexico | OBD-II / EOBD mix | ~2007 | US and EU platforms both common. |
+| Peru / Colombia | Import-led | Varies | Port present on many imports. Smoke-test before scoring. |
+| Japan | JOBD | 2003 basic · 2008 domestic | JDM may need a better adapter than export twins. |
+| South Korea | KOBD | 2005–06 · full ~2010 | Gasoline coverage is strong. |
+| China | GB 18352 China 5 / 6 | 2010 petrol · 2020 China 6 | Standard scan-tool PIDs on China 6. |
+| India | BS-VI OBD I / II | 2017 tools · 2020 / 2023 / 2025 stages | Hindi / Urdu / Punjabi markets. CAN on new cars. |
+| Thailand | TIS + EOBD | Euro 4 with EOBD from 2012 | Euro 3 wave can have a plug and no live PIDs. |
+| Philippines | Euro 4 EOBD | ~2016–18 | Consumer BLE dongles widely sold. |
+
+A 16-pin hole is not a promise. Newest 2020s platforms may use CAN-FD or DoIP — v1 stays on classic CAN / K-line and phone fallback. EVs are out of scope.
+
+### Connection flow in the app
+
+1. Find the port (driver-reach 16-pin).
+2. Plug a BLE adapter (iPhone needs BLE or MFi; Android accepts BLE or Classic).
+3. Handshake: auto-detect CAN / KWP2000 / K-line. Ten-second smoke test for RPM + speed.
+4. Fallback: GPS + IMU still scores lane and brake. Public rating shows a sensor badge, not a fake ECU score.
 
 ## What this folder is
 
