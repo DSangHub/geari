@@ -1,24 +1,23 @@
 # GEARI
 
-**Every shift. Scored.** — [geari.app](https://geari.app)
+**Every shift. Scored.**
 
-Landing page and product spec for a manual-transmission driving score app. The phone pairs with the vehicle computer (OBD-II / CAN / OBDBr / EOBD / JOBD / KOBD / China 6 / BS-VI). Every gear change is logged. Smooth shifts, lane changes, and braking earn points. Rideshare drivers get an independent rating the platforms do not own.
+Live site (GitHub Pages): **https://dsanghub.github.io/geari/**
 
-## Open the site
+Manual-transmission driving score app. Pair a BLE OBD adapter to the 16-pin port (OBD-II / OBDBr / EOBD / JOBD / KOBD / China 6 / BS-VI). Every gear is logged. Smooth shifts, lane changes, and braking earn points. Rideshare drivers get an independent rating.
 
-Open [`index.html`](index.html) in a browser. No build step.
+## Open locally
 
-- Live trip HUD (simulated)
-- Connect your car — South America and Far East OBD matrix
-- Safe-arrival commute planner
-- Rideshare profile mock
-- Language toggle: English, Español, हिन्दी, اردو, ਪੰਜਾਬੀ, Tagalog, ไทย
+Open `index.html` in a browser. No build.
 
-## Repo
+## Files
 
-| File | What it is |
+| File | Role |
 |---|---|
 | `index.html` | Product site |
-| `PRODUCT.md` | Scoring rules, backend sketch, hardware assumptions |
+| `style.css` | Theme |
+| `app.js` | HUD, commute planner, region filter |
+| `i18n.js` + `i18n-*.js` | English, Español, हिन्दी, اردو, ਪੰਜਾਬੀ, Tagalog, ไทย |
+| `PRODUCT.md` | Scoring rules and backend sketch |
 
 Concept only. Not a certified telematics device.
