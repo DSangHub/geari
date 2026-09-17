@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GEARI — Every shift. Scored.</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <nav>
+    <div class="wrap nav-in">
+      <a class="logo" href="#top"><span class="mark">G</span> GEARI</a>
+      <div class="nav-links">
+        <a href="PRODUCT.md">Product</a>
+        <a href="#connect">Connect</a>
+        <select class="lang" id="lang" aria-label="Language"></select>
+      </div>
+    </div>
+  </nav>
+  <main class="wrap" id="top">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Manual transmission · Vehicle computer</div>
+        <h1>Every shift.<br><span>Scored.</span></h1>
+        <p class="lead">GEARI pairs with the vehicle computer and records every gear change. Smooth shifts, lane changes, and braking earn points. Independent ratings for stick-shift and rideshare drivers — South America and the Far East first.</p>
+        <div class="hero-actions">
+          <a class="cta" href="PRODUCT.md">Read the spec</a>
+          <a class="cta ghost" href="#connect">Connect your car</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>H-pattern</b><span>1–6 + R logged</span></div>
+          <div class="stat"><b>OBD / CAN</b><span>OBDBr · EOBD · JOBD · BS-VI</span></div>
+          <div class="stat"><b>0–1000</b><span>Geari Score</span></div>
+        </div>
+      </div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="hud-top"><span class="live">TRIP LIVE</span><span class="mono">geari.app</span></div>
+        <div class="cluster">
+          <div class="gauge"><div class="rpm mono">2,140</div><div class="label">RPM</div></div>
+          <div class="gear-big">3</div>
+          <div class="gauge"><div class="rpm mono">38</div><div class="label">MPH</div></div>
+        </div>
+        <div class="bars">
+          <div class="bar"><span class="label">Shift</span><strong>94</strong></div>
+          <div class="bar"><span class="label">Lane</span><strong>88</strong></div>
+          <div class="bar"><span class="label">Brake</span><strong>91</strong></div>
+        </div>
+      </div>
+    </div>
+    <section id="connect">
+      <div class="sec-h">
+        <div class="eyebrow">South America · Far East · same plug</div>
+        <h2>Connect your car.</h2>
+        <p class="sub">The 16-pin port is SAE J1962 / ISO 15031-3. The law’s name changes: OBDBr-2 in Brazil, EOBD in Chile and ASEAN, JOBD in Japan, KOBD in Korea, China 6, India BS-VI. GEARI reads RPM and speed, then infers gear.</p>
+      </div>
+      <div class="steps">
+        <article class="card"><div class="step-n">01</div><h3>Find the port</h3><p>Under the dash, driver side.</p></article>
+        <article class="card"><div class="step-n">02</div><h3>BLE adapter</h3><p>Vgate iCar Pro BLE, Veepeak BLE+, or OBDLink MX+.</p></article>
+        <article class="card"><div class="step-n">03</div><h3>Handshake</h3><p>CAN, KWP2000, or K-line. Smoke-test RPM + speed.</p></article>
+        <article class="card"><div class="step-n">04</div><h3>Fallback</h3><p>No PIDs? Phone GPS + IMU. Sensor badge, not a fake ECU score.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap foot">
+      <div>GEARI · DSangHub/geari</div>
+      <div>Product concept · OBD-II / CAN</div>
+    </div>
+  </footer>
+  <script src="i18n.js"></script>
+  <script>
+    const LANGS = [["en","English"],["es","Español"],["hi","हिन्दी"],["ur","اردو"],["pa","ਪੰਜਾਬੀ"],["tl","Tagalog"],["th","ไทย"]];
+    const sel = document.getElementById("lang");
+    LANGS.forEach(([c,n]) => { const o = document.createElement("option"); o.value = c; o.textContent = n; sel.appendChild(o); });
+  </script>
+</body>
+</html>
